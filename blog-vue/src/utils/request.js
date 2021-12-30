@@ -3,9 +3,7 @@ import {Message, MessageBox} from 'element-ui'
 import store from '@/store/store'
 import router from '@/router/router'
 
-
 // 创建axios实例
-var prod
 const service = axios.create({
   baseURL: '/api', // api的base_url
   timeout: 15000, // 请求超时时间,
@@ -15,7 +13,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   // alert(store.state.token) //token可以通过此方式拿到
-  if (store.state.token != '') {
+  if (store.state.token !== '') {
     config.headers['Authorization'] = store.state.token // 让每个请求携带自定义token 请根据实际情况自行修改
   }
   return config
@@ -34,17 +32,16 @@ service.interceptors.response.use(
      */
     const res = response.data
 
-    if ((typeof (res.code) != "undefined" && res.code != 200) || (typeof (res.status) != "undefined" && res.status != true)) {
-
-      if (typeof (res.code) != "undefined" && res.code != 403) {
-        //开发环境
+    if ((typeof (res.code) !== 'undefined' && res.code !== 200) || (typeof (res.status) !== 'undefined' && res.status !== true)) {
+      if (typeof (res.code) !== 'undefined' && res.code !== 403) {
+        // 开发环境
         // Message({
         //   message: res.code + ' : ' + res.message,
         //   type: 'error',
         //   duration: 5 * 1000
         // })
 
-        //生产环境
+        // 生产环境
         Message({
           message: res.message,
           type: 'error',
@@ -52,7 +49,7 @@ service.interceptors.response.use(
         })
       }
 
-      if (typeof (res.status) != "undefined" && res.status != true) {
+      if (typeof (res.status) !== 'undefined' && res.status !== true) {
         Message({
           message: '远程接口错误',
           type: 'error',
@@ -61,25 +58,25 @@ service.interceptors.response.use(
       }
       // 403:Token过期 或 权限不足(恶意访问/被封禁) ;
       if (res.code === 403) {
-        store.commit('logout');
+        store.commit('logout')
         MessageBox.confirm('你已被登出，点击确定返回首页', '状态异常', {
           confirmButtonText: '确 定',
           cancelButtonText: '确 定',
           type: 'warning'
         }).then(() => {
           // window.location.href = '#/'
-          router.push({ //路由跳转
+          router.push({ // 路由跳转
             path: '/'
           })
           location.reload()
         }).catch(() => {
-
-          router.push({ //路由跳转
+          router.push({ // 路由跳转
             path: '/'
           })
           location.reload()
         })
       }
+      // eslint-disable-next-line prefer-promise-reject-errors
       return Promise.reject('error')
     } else {
       return response.data
@@ -87,8 +84,8 @@ service.interceptors.response.use(
   },
   error => {
     console.log('错误:' + error.message)// for debug
-    var message;
-    if (error.response.status == 504) {
+    var message
+    if (error.response.status === 504) {
       message = '连接超时'
     } else {
       message = error.message

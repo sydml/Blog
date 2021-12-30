@@ -140,7 +140,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.zzx.Application</mainClass>
+                    <mainClass>com.sydml.Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>

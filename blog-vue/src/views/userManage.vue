@@ -158,7 +158,7 @@ export default {
     },
     banUser (id, state) {
       user.banUser(id, state).then(res => {
-        if (state == 1) {
+        if (state === 1) {
           this.$message({
             message: '解封成功',
             type: 'success'

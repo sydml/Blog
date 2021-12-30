@@ -66,7 +66,7 @@ spring:
 
 mybatis:
   ###数据库模型对象
-  type-aliases-package: com.zzx.model.pojo
+  type-aliases-package: com.sydml.model.pojo
   mapper-locations: mapper/*.xml
   ###打印sql
 #  configuration:
