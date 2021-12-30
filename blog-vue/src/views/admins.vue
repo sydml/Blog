@@ -56,7 +56,7 @@
 <script>
 export default {
   name: 'admins',
-  data() {
+  data () {
     return {
       activeIndex: '1'
     }
@@ -66,7 +66,7 @@ export default {
     '$route.path': {
       deep: true,
       immediate: true,
-      handler(to, from) {
+      handler (to, from) {
         if (to === '/admins/codeManage') {
           this.activeIndex = '2'
         } else if (to === '/admins/announcementManage') {
@@ -78,8 +78,8 @@ export default {
     }
   },
   methods: {
-    handleSelect(key, keyPath) {
-//        console.log(key, keyPath);
+    handleSelect (key, keyPath) {
+      //        console.log(key, keyPath);
       this.activeIndex = key
     }
   }

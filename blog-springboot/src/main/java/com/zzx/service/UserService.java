@@ -454,6 +454,10 @@ public class UserService implements UserDetailsService {
         return redisTemplate.opsForValue().get(MailConfig.REDIS_MAIL_KEY_PREFIX + mail);
     }
 
+    public void setMailCodeToRedis(String mail, String code) {
+        redisTemplate.opsForValue().set(MailConfig.REDIS_MAIL_KEY_PREFIX + mail, code, MailConfig.EXPIRED_TIME,TimeUnit.MINUTES);
+    }
+
     /**
      * 校验验证码是否正确
      *
@@ -517,9 +521,6 @@ public class UserService implements UserDetailsService {
      * @see com.zzx.config.MailConfig
      */
     public void updateMailSendState(String mail, String code, int state) {
-        redisTemplate.opsForValue()
-                .set(MailConfig.REDIS_MAIL_KEY_PREFIX + mail,
-                        code + MailConfig.MAIL_STATE_MID_CHAR + state,
-                        MailConfig.EXPIRED_TIME, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(MailConfig.MAIL_STATE_KEY + mail, code + MailConfig.MAIL_STATE_MID_CHAR + state, MailConfig.EXPIRED_TIME, TimeUnit.MINUTES);
     }
 }

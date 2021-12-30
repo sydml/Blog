@@ -172,7 +172,6 @@ public class UserController {
 
         //此邮箱发送过验证码
         if (redisMailCode != null) {
-
             return Result.create(StatusCode.ERROR, MailConfig.EXPIRED_TIME + "分钟内不可重发验证码");
         } else {
             userService.sendMail(mail);
@@ -194,7 +193,7 @@ public class UserController {
         if (!(formatUtil.checkStringNull(mail))) {
             return Result.create(StatusCode.ERROR, "邮箱格式错误");
         }
-        String value = redisTemplate.opsForValue().get(MailConfig.REDIS_MAIL_KEY_PREFIX + mail);
+        String value = redisTemplate.opsForValue().get(MailConfig.MAIL_STATE_KEY + mail);
 
         if (null != value) {
             char state = value.charAt(value.length() - 1);
