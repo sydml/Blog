@@ -9,8 +9,11 @@ import com.zzx.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -39,13 +42,11 @@ public class TagService {
     public void saveTag(String tagName) {
         String username = jwtTokenUtil.getUsernameFromRequest(request);
         User user = userDao.findUserByName(username);
-
-
-        if (tagDao.findTagByTagName(tagName) != null) //mysql where tag_name 忽略大小写
-        {
-            throw new RuntimeException("标签重复");
+        //mysql where tag_name 忽略大小写
+        Tag userTag = tagDao.findTagByTagNameAndUserId(tagName, user.getId());
+        if (userTag != null) {
+            throw new RuntimeException("用户标签重复");
         }
-
         Tag tag = new Tag();
         tag.setUser(user);
         tag.setName(tagName);
@@ -97,6 +98,14 @@ public class TagService {
     public List<Tag> findTagByUserId() {
         String username = jwtTokenUtil.getUsernameFromRequest(request);
         User user = userDao.findUserByName(username);
+        List<Tag> userTags = tagDao.findTagByUserId(user.getId());
+        if (CollectionUtils.isEmpty(userTags)) {
+            Tag tag = new Tag();
+            tag.setUser(user);
+            tag.setName("默认标签");
+            tagDao.saveTag(tag);
+            return Arrays.asList(tag);
+        }
         return tagDao.findTagByUserId(user.getId());
     }
 }

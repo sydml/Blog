@@ -62,4 +62,10 @@
         WHERE LOWER(tag_name) = LOWER(#{value})
     </select>
 
+    <select id="findTagByTagNameAndUserId" resultMap="Tag">
+        SELECT tag_id,tag_name,user_id
+        FROM tag
+        WHERE LOWER(tag_name) = LOWER(#{tagName}) and user_id = #{userId}
+    </select>
+
 </mapper>

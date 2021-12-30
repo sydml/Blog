@@ -3,6 +3,7 @@ package com.zzx.dao;
 
 import com.zzx.model.pojo.Tag;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -68,4 +69,6 @@ public interface TagDao {
      * @return
      */
     Tag findTagByTagName(String tagName);
+
+    Tag findTagByTagNameAndUserId(@Param("tagName") String tagName, @Param("userId") Integer userId);
 }
