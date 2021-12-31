@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @ToString
 @ApiModel("用户")
+@Alias("User")
 public class User implements Serializable {
 
     /**

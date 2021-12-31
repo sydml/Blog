@@ -2,6 +2,7 @@ package com.sydml.model.pojo;
 
 import lombok.Data;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @Data
 @ToString(exclude = "body")
+@Alias("Blog")
 public class Blog implements Serializable {
     /**
      * blog(36) => 541312(10)

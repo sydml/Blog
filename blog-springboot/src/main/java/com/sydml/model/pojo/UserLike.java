@@ -3,6 +3,7 @@ package com.sydml.model.pojo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Data
 @ToString
 @ApiModel("用户")
+@Alias("UserLike")
 public class UserLike implements Serializable {
 
     private static final long serialVersionUID = -3956628880213302317L;

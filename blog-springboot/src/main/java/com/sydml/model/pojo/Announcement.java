@@ -2,6 +2,7 @@ package com.sydml.model.pojo;
 
 import lombok.Data;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
  */
 @Data
 @ToString
+@Alias("Announcement")
 public class Announcement {
     //id
     private Integer id;

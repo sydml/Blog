@@ -3,13 +3,14 @@ package com.sydml.model.pojo;
 
 import lombok.Data;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 /**
  * 角色
  */
 @Data
 @ToString
-
+@Alias("Role")
 public class Role {
 
     private Integer id;//角色id
