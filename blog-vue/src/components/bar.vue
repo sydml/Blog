@@ -95,7 +95,7 @@
 
             <el-menu-item route="/admins/userManage" index="4-4" v-if="this.$store.state.roles.indexOf('ADMIN') > -1">
               &nbsp;&nbsp;&nbsp;
-              <i class="el-icon-loading"></i>管理后台
+              <i class="el-icon-s-custom"></i>管理后台
             </el-menu-item>
 
             <el-menu-item @click="logout">&nbsp;&nbsp;&nbsp;
