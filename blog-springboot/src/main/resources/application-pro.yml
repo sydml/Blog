@@ -104,7 +104,7 @@ upload:
   #静态资源对外暴露的访问路径 一个* 代表只匹配该路径下的一级子路径
   staticAccessPath: /img/*
   #文件上传目录
-  uploadFolder: E:/blog
+  uploadFolder: F:/blog
   #文件夹层数
   layerCount: 2
   #文件夹内单位数

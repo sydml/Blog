@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @Configuration
@@ -87,7 +88,7 @@ public class BlogTask {
             redisTemplate.opsForList().rightPush(RedisConfig.REDIS_HOT_BLOG, blogId);
             // 存具体的blog对象
 
-            redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog));
+            redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog),RedisConfig.REDIS_BLOG_TIMEOUT, TimeUnit.SECONDS);
 
         }
     }
@@ -125,7 +126,7 @@ public class BlogTask {
 
             redisTemplate.opsForList().rightPush(RedisConfig.REDIS_NEW_BLOG, blogId);
             // 存具体的blog对象
-            redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog));
+            redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog),RedisConfig.REDIS_BLOG_TIMEOUT, TimeUnit.SECONDS);
 
         }
     }

@@ -66,4 +66,9 @@ public class RedisConfig {
      */
     public static final String MAP_USER_LIKE_KEY = "MAP_USER_LIKE_KEY";
 
+
+    /**
+     * 请求频率限制 缓存时间
+     */
+    public static final long REDIS_BLOG_TIMEOUT = 3600L;
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class BlogService {
@@ -174,7 +175,7 @@ public class BlogService {
         blog.getUser().setPassword(null);
         blog.getUser().setMail(null);
         blog.getUser().setState(null);
-        redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blog.getId(), objectMapper.writeValueAsString(blog));
+        redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blog.getId(), objectMapper.writeValueAsString(blog),RedisConfig.REDIS_BLOG_TIMEOUT, TimeUnit.SECONDS);
     }
 
     /**
@@ -210,7 +211,7 @@ public class BlogService {
 
             if (null != blogJson) {
                 // 有缓存 同步操作redis
-                redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog));
+                redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog),RedisConfig.REDIS_BLOG_TIMEOUT, TimeUnit.SECONDS);
                 //异步操作mysql 增加浏览量
                 rabbitTemplate.convertAndSend(RabbitMqConfig.BLOG_QUEUE, blog);
             } else {
@@ -286,7 +287,7 @@ public class BlogService {
                 String blogId = Integer.toString(blog.getId());
 
                 redisTemplate.opsForList().rightPush(RedisConfig.REDIS_NEW_BLOG, blogId);
-                redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog));
+                redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog),RedisConfig.REDIS_BLOG_TIMEOUT, TimeUnit.SECONDS);
             }
         }
 
@@ -443,7 +444,7 @@ public class BlogService {
         // 数据 存在于缓存中
         if (redisTemplate.hasKey(RedisConfig.REDIS_BLOG_PREFIX + blogId)) {
             blog.setTags(tagDao.findTagByBlogId(blogId));
-            redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog));
+            redisTemplate.opsForValue().set(RedisConfig.REDIS_BLOG_PREFIX + blogId, objectMapper.writeValueAsString(blog),RedisConfig.REDIS_BLOG_TIMEOUT, TimeUnit.SECONDS);
         }
     }
 
